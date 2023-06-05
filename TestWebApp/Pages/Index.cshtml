@@ -1,0 +1,30 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<textarea id="txt-send" name="txt-send" rows="12" cols="50">
+    {
+        name: "john",
+        code: "abc",
+        number: 2,
+        items: [ 
+            { name: "milk", value: 5.75 },
+            { name: "apple", value: 4.59 },
+        ]
+    }
+</textarea>
+</br>
+
+<button onclick="onSendClick()">
+    Send to Native
+</button>
+
+</br>
+</br>
