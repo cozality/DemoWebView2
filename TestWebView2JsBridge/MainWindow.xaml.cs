@@ -1,25 +1,11 @@
 ﻿using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
-using System.Security.Policy;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace TestWebView2JsBridge
 {
@@ -51,12 +37,13 @@ console.log('invokeNative injected successfully');
             InitializeComponent();
 
             txtJsText.Text = @"
-function helloFromCsharp()
+function jsFunctionFromCsharp()
 { 
-    alert('Hello from Csharp!');
-    document.getElementsByClassName('display-4')[0].style = 'background-color:green';
+    // alert('Hello from Csharp!');   
+    var result = document.getElementById('txt-send').value;
+    return result;
 }
-helloFromCsharp();
+jsFunctionFromCsharp();
 ";
         }
 
@@ -125,7 +112,10 @@ helloFromCsharp();
                 var jsScript = txtJsText.Text.Trim();
                 if (!string.IsNullOrWhiteSpace(jsScript))
                 {
-                    await webViewControl.ExecuteScriptAsync(jsScript);
+                    var result = await webViewControl.ExecuteScriptAsync(jsScript);
+                    MessageBox.Show($"Result: {result} returned from Javascript.");       
+                    result = null;
+                    GC.Collect();
                 }
             }
             catch(Exception ex)
